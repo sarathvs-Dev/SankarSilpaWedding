@@ -1,0 +1,16 @@
+Drop your background music file here as:
+
+    public/bgm.mp3
+
+The MusicToggle component references it at the root path "/bgm.mp3", so
+Vite will serve it as a static file — no import or build step needed.
+
+Suggestions:
+- Keep it under ~3MB (an instrumental loop, not a full song) so the page
+  loads fast on mobile.
+- Use something you have the rights to use (a royalty-free instrumental,
+  or a track you've licensed) — this file isn't included by default.
+- If you don't add a file, the music toggle button will simply do nothing
+  when tapped (no error, just silence) until you add one.
+
+You can delete this note once bgm.mp3 is in place.

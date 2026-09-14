@@ -59,8 +59,6 @@ export default function Section6Venue() {
           </Reveal>
         </div>
       </div>
-
-      <div className="fade-to-light" />
     </section>
   )
 }

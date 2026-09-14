@@ -108,6 +108,11 @@ export default function MusicToggle() {
       stopSynth()
       setPlaying(false)
     } else {
+      // Resume Web Audio context within direct user click gesture (required for iOS/Android/Vercel)
+      if (synthCtxRef.current && synthCtxRef.current.state === 'suspended') {
+        synthCtxRef.current.resume()
+      }
+
       if (useSynth) {
         startSynth()
         setPlaying(true)
@@ -118,7 +123,7 @@ export default function MusicToggle() {
           .play()
           .then(() => setPlaying(true))
           .catch(() => {
-            // Audio file failed to play or doesn't exist; use synth fallback
+            // Audio file missing (404) or blocked by autoplay policy -> fallback to Web Audio melody
             setUseSynth(true)
             startSynth()
             setPlaying(true)

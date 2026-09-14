@@ -35,8 +35,6 @@ export default function Section8Blessings() {
         <Reveal as="p" className="addr reveal d2">Chundacheril House, Chirakkadavu</Reveal>
         <Reveal as="p" className="tag reveal d2">BRIDE'S FAMILY</Reveal>
       </div>
-
-      <div className="fade-to-dark" />
     </section>
   )
 }

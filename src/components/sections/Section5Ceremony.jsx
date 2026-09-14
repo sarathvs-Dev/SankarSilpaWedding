@@ -26,8 +26,7 @@ export default function Section5Ceremony() {
 
   return (
     <section id="p5" data-tone="dark">
-      <Reveal as="div" className="fade-from-dark" />
-      <Reveal as="div" className="seam" />
+      <Reveal as="div" className="seam" opacity={1} />
       <div className="sec-bg">
         <div
           className="glow glow-lift"

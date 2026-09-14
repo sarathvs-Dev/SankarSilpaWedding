@@ -46,7 +46,7 @@ export default function App() {
         <Section6Venue />
         <Section8Blessings />
         <Section9Closing />
-        <Section10Wishes />
+        {/* <Section10Wishes /> */}
       </div>
     </>
   )

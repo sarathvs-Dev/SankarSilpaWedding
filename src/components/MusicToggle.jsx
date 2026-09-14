@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 const NOTES = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25]
 const MELODY = [0, 2, 3, 4, 3, 2, 5, 4, 3, 2, 1, 0, 2, 4, 5, 7, 5, 4, 2, 0]
 
-export default function MusicToggle() {
+export default function MusicToggle({ src = '/song.mp4', volume = 0.5 }) {
   const audioRef = useRef(null)
   const synthCtxRef = useRef(null)
   const synthTimerRef = useRef(null)
@@ -12,9 +12,9 @@ export default function MusicToggle() {
   const [useSynth, setUseSynth] = useState(false)
 
   useEffect(() => {
-    const audio = new Audio('/bgm.mp3')
+    const audio = new Audio(src)
     audio.loop = true
-    audio.volume = 0.5
+    audio.volume = volume
 
     // Test if audio file exists and can be played
     audio.addEventListener('error', () => {
@@ -28,7 +28,7 @@ export default function MusicToggle() {
       audioRef.current = null
       stopSynth()
     }
-  }, [])
+  }, [src, volume])
 
   const startSynth = () => {
     try {
@@ -147,4 +147,3 @@ export default function MusicToggle() {
     </button>
   )
 }
-

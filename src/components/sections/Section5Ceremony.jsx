@@ -1,6 +1,8 @@
 import { useMemo } from 'react'
 import Reveal from '../Reveal.jsx'
 import Drift from '../Drift.jsx'
+import handsImg from '../../assets/wedding-hands.png'
+
 
 function buildIcsHref() {
   const ics = [
@@ -46,9 +48,14 @@ export default function Section5Ceremony() {
       <Reveal as="p" className="lede reveal" style={{ marginTop: 6, fontSize: '0.92rem' }}>1202 Vrischikam 26</Reveal>
 
       <Reveal as="div" className="time-card reveal d1">
-        <svg width="34" height="48" viewBox="0 0 60 90" style={{ margin: '0 auto 10px', display: 'block', filter: 'url(#rough-soft)' }}>
+        {/* <svg width="34" height="48" viewBox="0 0 60 90" style={{ margin: '0 auto 10px', display: 'block', filter: 'url(#rough-soft)' }}>
           <use href="#brass-lamp" />
-        </svg>
+        </svg> */}
+        <img
+  src={handsImg}
+  alt="Wedding hands illustration"
+  style={{ width: 260, margin: '0 auto 10px', display: 'block' }}
+/>
         <p className="muh">MUHURTHAM</p>
         <p className="time">11:53 AM – 12:15 PM</p>
         <p className="muh" style={{ marginTop: 10 }}>ABHIJITH MUHURTHAM</p>

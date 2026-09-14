@@ -3,6 +3,8 @@ import Drift from '../Drift.jsx'
 import Countdown from '../Countdown.jsx'
 import useGuestName from '../../hooks/useGuestName.js'
 import mandapamBg from '../../assets/mandapam-bg.png'
+import ganapathyLogo from '../../assets/ganapathy-logo.png'
+
 
 export default function Section1Opening({ onOpenShare }) {
   const guestName = useGuestName()
@@ -33,9 +35,17 @@ export default function Section1Opening({ onOpenShare }) {
       <svg className="corner bl" viewBox="0 0 40 40"><use href="#corner-flourish" /></svg>
       <svg className="corner br" viewBox="0 0 40 40"><use href="#corner-flourish" /></svg>
 
-      <Reveal as="svg" width="46" height="66" viewBox="0 0 60 90" className="reveal">
+      {/* <Reveal as="svg" width="46" height="66" viewBox="0 0 60 90" className="reveal">
         <use href="#brass-lamp" />
-      </Reveal>
+      </Reveal> */}
+
+      <Reveal as="div" className="reveal" style={{ display: 'inline-block' }}>
+  <img
+    src={ganapathyLogo}
+    style={{ height: 66, width: 'auto' }}
+    alt="Ganapathy"
+  />
+</Reveal>
 
       {guestName && (
         <Reveal as="p" className="guest-greeting reveal d1">Dear {guestName},</Reveal>

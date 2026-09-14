@@ -4,31 +4,12 @@ import { useEffect, useRef, useState } from 'react'
 const NOTES = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25]
 const MELODY = [0, 2, 3, 4, 3, 2, 5, 4, 3, 2, 1, 0, 2, 4, 5, 7, 5, 4, 2, 0]
 
-export default function MusicToggle({ src = '/song.mp4', volume = 0.5 }) {
+export default function MusicToggle({ src = '/songCut.mp4', volume = 0.2, autoPlay = true }) {
   const audioRef = useRef(null)
   const synthCtxRef = useRef(null)
   const synthTimerRef = useRef(null)
   const [playing, setPlaying] = useState(false)
   const [useSynth, setUseSynth] = useState(false)
-
-  useEffect(() => {
-    const audio = new Audio(src)
-    audio.loop = true
-    audio.volume = volume
-
-    // Test if audio file exists and can be played
-    audio.addEventListener('error', () => {
-      setUseSynth(true)
-    })
-
-    audioRef.current = audio
-
-    return () => {
-      audio.pause()
-      audioRef.current = null
-      stopSynth()
-    }
-  }, [src, volume])
 
   const startSynth = () => {
     try {
@@ -102,33 +83,79 @@ export default function MusicToggle({ src = '/song.mp4', volume = 0.5 }) {
     }
   }
 
+  const startPlayback = () => {
+    if (useSynth) {
+      startSynth()
+      setPlaying(true)
+      return
+    }
+    const audio = audioRef.current
+    if (!audio) return
+    audio
+      .play()
+      .then(() => setPlaying(true))
+      .catch(() => {
+        setUseSynth(true)
+        startSynth()
+        setPlaying(true)
+      })
+  }
+
+  useEffect(() => {
+    const audio = new Audio(src)
+    audio.loop = true
+    audio.volume = volume
+
+    audio.addEventListener('error', () => {
+      setUseSynth(true)
+    })
+
+    audioRef.current = audio
+
+    let cleanupInteractionListeners = () => {}
+
+    if (autoPlay) {
+      audio
+        .play()
+        .then(() => setPlaying(true))
+        .catch(() => {
+          // Autoplay blocked by browser — wait for first user interaction, then start
+          const startOnInteraction = () => {
+            if (synthCtxRef.current && synthCtxRef.current.state === 'suspended') {
+              synthCtxRef.current.resume()
+            }
+            startPlayback()
+            cleanupInteractionListeners()
+          }
+
+          const events = ['click', 'touchstart', 'keydown', 'scroll']
+          events.forEach((e) => window.addEventListener(e, startOnInteraction, { once: true }))
+
+          cleanupInteractionListeners = () => {
+            events.forEach((e) => window.removeEventListener(e, startOnInteraction))
+          }
+        })
+    }
+
+    return () => {
+      audio.pause()
+      audioRef.current = null
+      stopSynth()
+      cleanupInteractionListeners()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [src, volume, autoPlay])
+
   const toggle = () => {
     if (playing) {
       if (audioRef.current) audioRef.current.pause()
       stopSynth()
       setPlaying(false)
     } else {
-      // Resume Web Audio context within direct user click gesture (required for iOS/Android/Vercel)
       if (synthCtxRef.current && synthCtxRef.current.state === 'suspended') {
         synthCtxRef.current.resume()
       }
-
-      if (useSynth) {
-        startSynth()
-        setPlaying(true)
-      } else {
-        const audio = audioRef.current
-        if (!audio) return
-        audio
-          .play()
-          .then(() => setPlaying(true))
-          .catch(() => {
-            // Audio file missing (404) or blocked by autoplay policy -> fallback to Web Audio melody
-            setUseSynth(true)
-            startSynth()
-            setPlaying(true)
-          })
-      }
+      startPlayback()
     }
   }
 

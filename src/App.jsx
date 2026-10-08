@@ -1,55 +1,51 @@
 import { useState } from 'react'
-import SvgDefs from './components/SvgDefs.jsx'
 import Gate from './components/Gate.jsx'
-import LampRail from './components/LampRail.jsx'
-import DotNav from './components/DotNav.jsx'
+import SideDots from './components/SideDots.jsx'
+import Spotlight from './components/Spotlight.jsx'
+import useScreenFX from './hooks/useScreenFX.js'
+import useSectionScroll from './hooks/useSectionScroll.js'
+import Nav from './components/Nav.jsx'
 import MusicToggle from './components/MusicToggle.jsx'
 import ShareModal from './components/ShareModal.jsx'
-import Section1Opening from './components/sections/Section1Opening.jsx'
-import Section2Hero from './components/sections/Section2Hero.jsx'
-import Section3Story from './components/sections/Section3Story.jsx'
-import Section4Couple from './components/sections/Section4Couple.jsx'
-import Section5Ceremony from './components/sections/Section5Ceremony.jsx'
-import Section6Venue from './components/sections/Section6Venue.jsx'
-import Section8Blessings from './components/sections/Section8Blessings.jsx'
-import Section9Closing from './components/sections/Section9Closing.jsx'
-import Section10Wishes from './components/sections/Section10Wishes.jsx'
+import Hero from './components/sections/Hero.jsx'
+import Story from './components/sections/Story.jsx'
+import Couple from './components/sections/Couple.jsx'
+import Events from './components/sections/Events.jsx'
+import Gallery from './components/sections/Gallery.jsx'
+import Blessings from './components/sections/Blessings.jsx'
+import Rsvp from './components/sections/Rsvp.jsx'
+import Closing from './components/sections/Closing.jsx'
 
 export default function App() {
   const [shareOpen, setShareOpen] = useState(false)
+  useScreenFX() // feeds --sp/--ap scroll variables to every <Screen>
+  useSectionScroll() // eased screen-by-screen glide (desktop)
 
+  // Unlock scrolling and tell every <Reveal> it may start animating.
   const handleGateOpen = () => {
     document.body.classList.remove('locked')
-    setTimeout(() => {
-      window.dispatchEvent(new Event('scroll'))
-      window.dispatchEvent(new Event('resize'))
-    }, 50)
+    window.dispatchEvent(new Event('invitation:open'))
   }
 
   return (
     <>
       <Gate onOpen={handleGateOpen} />
-      <DotNav />
-      <LampRail />
+      <Nav />
+      <SideDots />
+      <Spotlight />
       <MusicToggle />
       <ShareModal isOpen={shareOpen} onClose={() => setShareOpen(false)} />
 
-      <div className="stage" id="stage">
-        <div className="grain" />
-        <SvgDefs />
-
-        <Section1Opening onOpenShare={() => setShareOpen(true)} />
-        <Section2Hero />
-        <Section3Story />
-        <Section4Couple />
-        <Section5Ceremony />
-        <Section6Venue />
-        <Section8Blessings />
-        <Section9Closing />
-        {/* <Section10Wishes /> */}
-      </div>
+      <main>
+        <Hero onOpenShare={() => setShareOpen(true)} />
+        <Story />
+        <Couple />
+        <Events />
+        <Gallery />
+        <Blessings />
+        <Rsvp />
+        <Closing />
+      </main>
     </>
   )
 }
-
-

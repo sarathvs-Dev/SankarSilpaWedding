@@ -1,70 +1,66 @@
 import { useEffect, useRef, useState } from 'react'
 
 /**
- * Generic reveal-on-scroll wrapper.
- * Uses IntersectionObserver + immediate getBoundingClientRect fallback
- * so elements in the viewport are never stuck blank on initial load.
+ * Scroll-reveal logic.
+ *  - One IntersectionObserver per element; fires once, then disconnects.
+ *  - Waits for the gate to open ("invitation:open" event) so the hero
+ *    animation plays when the guest actually sees it, not behind the gate.
+ *  - Pure CSS does the motion (.rv / .rv.in in index.css): opacity + transform
+ *    only, so it is GPU-friendly and causes no layout shift (CLS).
  */
-export default function Reveal({ as: Tag = 'div', className = '', children, ...props }) {
+function useGateOpen() {
+  const [open, setOpen] = useState(() => !document.body.classList.contains('locked'))
+  useEffect(() => {
+    if (open) return
+    const h = () => setOpen(true)
+    window.addEventListener('invitation:open', h)
+    return () => window.removeEventListener('invitation:open', h)
+  }, [open])
+  return open
+}
+
+/**
+ * variant: 'up' | 'zoom' | 'left' | 'right' | 'fade'
+ * delay:   ms, used for soft staggering of lists/cards
+ */
+export default function Reveal({
+  as: Tag = 'div',
+  variant = 'up',
+  delay = 0,
+  className = '',
+  style,
+  children,
+  ...props
+}) {
   const ref = useRef(null)
   const [inView, setInView] = useState(false)
+  const ready = useGateOpen()
 
   useEffect(() => {
+    if (!ready || inView) return
     const node = ref.current
     if (!node) return
-
-    const checkInView = () => {
-      const rect = node.getBoundingClientRect()
-      const vh = window.innerHeight || document.documentElement.clientHeight
-      if (rect.top < vh + 120 && rect.bottom > -100) {
-        setInView(true)
-        return true
-      }
-      return false
-    }
-
-    // Check immediately on mount
-    if (checkInView()) return
-
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting || entry.intersectionRatio > 0 || checkInView()) {
+        if (entry.isIntersecting) {
           setInView(true)
           io.disconnect()
         }
       },
-      { threshold: 0, rootMargin: '120px 0px 120px 0px' }
+      { threshold: 0.08, rootMargin: '0px 0px -6% 0px' }
     )
-
     io.observe(node)
-
-    // Listen for scroll/resize events (e.g. when body.locked is removed)
-    const handleCheck = () => {
-      if (checkInView()) {
-        io.disconnect()
-        window.removeEventListener('scroll', handleCheck)
-        window.removeEventListener('resize', handleCheck)
-      }
-    }
-
-    window.addEventListener('scroll', handleCheck, { passive: true })
-    window.addEventListener('resize', handleCheck, { passive: true })
-
-    // Backup timer for font/layout load
-    const timer = setTimeout(handleCheck, 200)
-
-    return () => {
-      io.disconnect()
-      window.removeEventListener('scroll', handleCheck)
-      window.removeEventListener('resize', handleCheck)
-      clearTimeout(timer)
-    }
-  }, [])
+    return () => io.disconnect()
+  }, [ready, inView])
 
   return (
-    <Tag ref={ref} className={`${className} ${inView ? 'in' : ''}`.trim()} {...props}>
+    <Tag
+      ref={ref}
+      className={`rv rv-${variant} ${inView ? 'in' : ''} ${className}`.trim()}
+      style={{ '--d': `${delay}ms`, ...style }}
+      {...props}
+    >
       {children}
     </Tag>
   )
 }
-

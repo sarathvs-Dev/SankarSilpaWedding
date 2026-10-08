@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 const NOTES = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25]
 const MELODY = [0, 2, 3, 4, 3, 2, 5, 4, 3, 2, 1, 0, 2, 4, 5, 7, 5, 4, 2, 0]
 
-export default function MusicToggle({ src = '/songCut.mp4', volume = 0.2, autoPlay = true }) {
+export default function MusicToggle({ src = '/songCut.mp4', volume = 0.2, autoPlay = false }) {
   const audioRef = useRef(null)
   const synthCtxRef = useRef(null)
   const synthTimerRef = useRef(null)
@@ -166,11 +166,10 @@ export default function MusicToggle({ src = '/songCut.mp4', volume = 0.2, autoPl
       aria-label={playing ? 'Pause background music' : 'Play background music'}
       title={playing ? 'Pause music' : 'Play music'}
     >
-      <svg viewBox="0 0 24 24" width="16" height="16">
-        <path d="M9 18V5l12-2v13" fill="none" stroke="currentColor" strokeWidth="1.6" />
-        <circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" strokeWidth="1.6" />
-        <circle cx="18" cy="16" r="3" fill="none" stroke="currentColor" strokeWidth="1.6" />
-      </svg>
+      {/* gold vinyl: spins while playing */}
+      <span className="vinyl" aria-hidden="true"><i /></span>
+      {/* soundwave bars: flat when paused, dancing when playing */}
+      <span className="bars" aria-hidden="true"><b /><b /><b /><b /><b /></span>
     </button>
   )
 }

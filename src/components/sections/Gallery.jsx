@@ -24,8 +24,8 @@ import fam from '../../assets/family.jpg'
 const PHOTOS = [
   { src: e, w: 2560, h: 1707, cat: 'Pre-Wedding', cap: 'Two hearts, one beginning' },
   { src: a, w: 1707, h: 2560, cat: 'Pre-Wedding', cap: 'Together' },
-  { src: h, w: 1707, h: 2560, cat: 'Pre-Wedding', cap: 'Shankar' },
-  { src: i, w: 1707, h: 2560, cat: 'Pre-Wedding', cap: 'Shilpa' },
+  { src: h, w: 1707, h: 2560, cat: 'Pre-Wedding', cap: 'Sankar' },
+  { src: i, w: 1707, h: 2560, cat: 'Pre-Wedding', cap: 'Silpa' },
   { src: c, w: 2560, h: 1707, cat: 'Proposal', cap: 'The question' },
   { src: b, w: 1707, h: 2560, cat: 'Proposal', cap: 'The answer' },
   { src: g, w: 2560, h: 1707, cat: 'Engagement', cap: 'Rings & mehendi' },

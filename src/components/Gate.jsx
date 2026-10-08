@@ -40,7 +40,7 @@ export default function Gate({ onOpen }) {
         <img src={ganapathyLogo} alt="" width="54" height="54" className="gate-logo" />
         {guestName && <p className="gate-guest">Dear {guestName}</p>}
         <p className="gate-names">
-          Shankar <span className="gate-amp">&amp;</span> Shilpa
+          Sankar <span className="gate-amp">&amp;</span> Silpa
         </p>
         <span className="gate-line" />
         <p className="gate-tap">

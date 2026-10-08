@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
-// 12 Dec 2026, 11:53 AM IST — explicit offset so it is correct from anywhere.
-const TARGET = new Date('2026-12-12T11:53:00+05:30').getTime()
+// 12 Dec 2026, 11:50 AM IST — explicit offset so it is correct from anywhere.
+const TARGET = new Date('2026-12-12T11:50:00+05:30').getTime()
 
 function getParts() {
   const diff = Math.max(0, TARGET - Date.now())

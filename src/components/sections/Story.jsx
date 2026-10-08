@@ -21,8 +21,8 @@ const STEPS = [
   },
   {
     eyebrow: 'Saturday, 12th December 2026', title: 'The day we say yes',
-    text: 'The Muhurtham at 11:53 AM, followed by the Grihapravesham at the groom’s home.',
-    img: blessedImg, alt: 'Shankar and Shilpa', w: 1707, h: 2560, k: -60,
+    text: 'The wedding ceremony at 11:50 AM at Chirakkadavu Sree Mahadeva Temple, Ponkunnam.',
+    img: blessedImg, alt: 'Sankar and Silpa', w: 1707, h: 2560, k: -60,
   },
 ]
 

@@ -12,7 +12,7 @@ const SEED_WISHES = [
   {
     name: 'Anand & Family',
     attending: 'joyfully',
-    message: 'Wishing Shankar and Shilpa a lifetime of laughter, joy and togetherness! Excited for the wedding.',
+    message: 'Wishing Sankar and Silpa a lifetime of laughter, joy and togetherness! Excited for the wedding.',
     ts: 1700000000000,
   },
   {
@@ -126,7 +126,7 @@ export default function Rsvp() {
               maxLength={280}
               rows={3}
             />
-            <label htmlFor="rsvp-msg">Leave a wish for Shankar &amp; Shilpa (optional)</label>
+            <label htmlFor="rsvp-msg">Leave a wish for Sankar &amp; Silpa (optional)</label>
           </div>
 
           <button type="submit" className="btn btn-gold btn-block">

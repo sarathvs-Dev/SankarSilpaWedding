@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import InviteDownload from './InviteDownload.jsx'
 
 export default function ShareModal({ isOpen, onClose }) {
   const [guestInput, setGuestInput] = useState('')
@@ -20,8 +21,8 @@ export default function ShareModal({ isOpen, onClose }) {
 
   const shareWhatsApp = () => {
     const text = guestInput.trim()
-      ? `Dear ${guestInput.trim()},\n\nWe cordially invite you to the wedding ceremony of Shankar & Shilpa on 12th December 2026 at Chirakkadavu!\n\nView your personalized invitation here:\n${shareUrl}`
-      : `We cordially invite you to the wedding ceremony of Shankar & Shilpa on 12th December 2026 at Chirakkadavu!\n\nView invitation here:\n${shareUrl}`
+      ? `Dear ${guestInput.trim()},\n\nWe cordially invite you to the wedding ceremony of Sankar & Silpa on 12th December 2026 at Chirakkadavu!\n\nView your personalized invitation here:\n${shareUrl}`
+      : `We cordially invite you to the wedding ceremony of Sankar & Silpa on 12th December 2026 at Chirakkadavu!\n\nView invitation here:\n${shareUrl}`
 
     const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`
     window.open(waUrl, '_blank')
@@ -60,6 +61,7 @@ export default function ShareModal({ isOpen, onClose }) {
             SHARE VIA WHATSAPP
           </button>
         </div>
+        <InviteDownload className="btn btn-ghost-dark btn-block" >Download Invitation Card</InviteDownload>
       </div>
     </div>
   )

@@ -2,6 +2,7 @@ import Reveal from '../Reveal.jsx'
 import Screen from '../Screen.jsx'
 import Ambient from '../Ambient.jsx'
 import Countdown from '../Countdown.jsx'
+import InviteDownload from '../InviteDownload.jsx'
 import useGuestName from '../../hooks/useGuestName.js'
 import heroImg from '../../assets/ARJ01736_resized.jpg'
 import ganapathyLogo from '../../assets/ganapathy-logo.png'
@@ -47,9 +48,9 @@ export default function Hero({ onOpenShare }) {
         </Reveal>
 
         <Reveal as="h1" className="hero-names" delay={350} variant="zoom">
-          <span className="shimmer">Shankar</span>
+          <span className="shimmer">Sankar</span>
           <em>&amp;</em>
-          <span className="shimmer">Shilpa</span>
+          <span className="shimmer">Silpa</span>
         </Reveal>
 
         <Reveal as="p" className="date-pill" delay={500}>12 · December · 2026</Reveal>
@@ -58,13 +59,9 @@ export default function Hero({ onOpenShare }) {
           <Countdown />
         </Reveal>
 
-        <Reveal delay={700}>
-          <button className="btn btn-ghost" onClick={onOpenShare}>
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
-              <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z" />
-            </svg>
-            Personalize &amp; Share Invitation
-          </button>
+        <Reveal className="hero-actions" delay={700}>
+          <InviteDownload />
+          {/* Personalize & Share button hidden for now — restore: <button className="btn btn-ghost" onClick={onOpenShare}>Personalize &amp; Share Invitation</button> */}
         </Reveal>
       </div>
       <div className="scroll-cue" aria-hidden="true"><span /></div>

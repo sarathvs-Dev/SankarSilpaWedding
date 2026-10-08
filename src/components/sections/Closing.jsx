@@ -3,6 +3,7 @@ import confetti from 'canvas-confetti'
 import Reveal from '../Reveal.jsx'
 import Screen from '../Screen.jsx'
 import Ambient from '../Ambient.jsx'
+import InviteDownload from '../InviteDownload.jsx'
 import closingBg from '../../assets/endBg.png'
 
 export default function Closing() {
@@ -55,17 +56,18 @@ export default function Closing() {
       <div className="container narrow closing-inner">
         <Reveal as="p" className="eyebrow">Together Forever</Reveal>
         <Reveal as="h2" className="closing-title" delay={100} variant="zoom">
-          Shankar <em className="amp">&amp;</em> Shilpa
+          Sankar <em className="amp">&amp;</em> Silpa
         </Reveal>
         <Reveal as="p" className="closing-sub" delay={200}>
           With love and blessings,<br />we look forward to celebrating with you.
         </Reveal>
         <Reveal className="ornament" delay={250} aria-hidden="true"><i /><b /><i /></Reveal>
 
-        <Reveal delay={300}>
+        <Reveal className="closing-actions" delay={300}>
           <button className="btn btn-gold" onClick={celebrate}>
             Celebrate with us <span aria-hidden="true">→</span>
           </button>
+          <InviteDownload />
         </Reveal>
 
         <Reveal className="closing-meta" delay={400}>

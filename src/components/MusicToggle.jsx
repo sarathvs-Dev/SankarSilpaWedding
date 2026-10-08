@@ -4,10 +4,11 @@ import { useEffect, useRef, useState } from 'react'
 const NOTES = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25]
 const MELODY = [0, 2, 3, 4, 3, 2, 5, 4, 3, 2, 1, 0, 2, 4, 5, 7, 5, 4, 2, 0]
 
-export default function MusicToggle({ src = '/songCut.mp4', volume = 0.2, autoPlay = false }) {
+export default function MusicToggle({ src = '/songCut.mp4', volume = 0.18, autoPlay = false }) {
   const audioRef = useRef(null)
   const synthCtxRef = useRef(null)
   const synthTimerRef = useRef(null)
+  const fadeRef = useRef(null)
   const [playing, setPlaying] = useState(false)
   const [useSynth, setUseSynth] = useState(false)
 
@@ -112,6 +113,28 @@ export default function MusicToggle({ src = '/songCut.mp4', volume = 0.2, autoPl
 
     audioRef.current = audio
 
+    // When the guest taps the gate open (a user gesture, so browsers allow
+    // sound), start the music at silence and fade it in gently over ~5s.
+    const onOpen = () => {
+      audio.volume = 0
+      audio
+        .play()
+        .then(() => {
+          setPlaying(true)
+          clearInterval(fadeRef.current)
+          fadeRef.current = setInterval(() => {
+            audio.volume = Math.min(volume, audio.volume + volume / 50)
+            if (audio.volume >= volume) clearInterval(fadeRef.current)
+          }, 100)
+        })
+        .catch(() => {
+          setUseSynth(true)
+          startSynth()
+          setPlaying(true)
+        })
+    }
+    window.addEventListener('invitation:open', onOpen)
+
     let cleanupInteractionListeners = () => {}
 
     if (autoPlay) {
@@ -138,6 +161,8 @@ export default function MusicToggle({ src = '/songCut.mp4', volume = 0.2, autoPl
     }
 
     return () => {
+      window.removeEventListener('invitation:open', onOpen)
+      clearInterval(fadeRef.current)
       audio.pause()
       audioRef.current = null
       stopSynth()
@@ -148,10 +173,12 @@ export default function MusicToggle({ src = '/songCut.mp4', volume = 0.2, autoPl
 
   const toggle = () => {
     if (playing) {
+      clearInterval(fadeRef.current)
       if (audioRef.current) audioRef.current.pause()
       stopSynth()
       setPlaying(false)
     } else {
+      if (audioRef.current) audioRef.current.volume = volume
       if (synthCtxRef.current && synthCtxRef.current.state === 'suspended') {
         synthCtxRef.current.resume()
       }

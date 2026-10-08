@@ -6,12 +6,12 @@ import brideImg from '../../assets/ARJ01182_resized.jpg'
 
 const PEOPLE = [
   {
-    name: 'Shankar', role: 'Groom', img: groomImg, alt: 'Shankar — Groom',
-    rel: 'Son of', parents: ['Mrs. P.N. Siju', 'Mr. V.R. Shivadas'], house: 'Vayambukunnel', k: -40,
+    name: 'Sankar', role: 'Groom', img: groomImg, alt: 'Sankar — Groom',
+    rel: 'Son of', parents: ['Mr. Sivadas V.R.', 'Mrs. Siju P.N.'], house: 'Vayambukunnel', k: -40,
   },
   {
-    name: 'Shilpa', role: 'Bride', img: brideImg, alt: 'Shilpa — Bride',
-    rel: 'Daughter of', parents: ['Mrs. S. Lalimol', 'Mr. C.S. Premkumar'], house: 'Chundacheril', k: -80,
+    name: 'Silpa', role: 'Bride', img: brideImg, alt: 'Silpa — Bride',
+    rel: 'Daughter of', parents: ['Mr. Premkumar C.S.', 'Mrs. Lalimol S.'], house: 'Choondacheril', k: -80,
   },
 ]
 
@@ -23,7 +23,7 @@ export default function Couple() {
       <div className="container">
         <header className="section-head">
           <Reveal as="p" className="eyebrow">The Couple</Reveal>
-          <Reveal as="h2" delay={100}>Shankar <em className="amp">&amp;</em> Shilpa</Reveal>
+          <Reveal as="h2" delay={100}>Sankar <em className="amp">&amp;</em> Silpa</Reveal>
         </header>
 
         <div className="couple-grid">

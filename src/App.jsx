@@ -13,7 +13,7 @@ import Couple from './components/sections/Couple.jsx'
 import Events from './components/sections/Events.jsx'
 import Gallery from './components/sections/Gallery.jsx'
 import Blessings from './components/sections/Blessings.jsx'
-import Rsvp from './components/sections/Rsvp.jsx'
+// import Rsvp from './components/sections/Rsvp.jsx'
 import Closing from './components/sections/Closing.jsx'
 
 export default function App() {
@@ -43,7 +43,8 @@ export default function App() {
         <Events />
         <Gallery />
         <Blessings />
-        <Rsvp />
+        {/* RSVP hidden for now — uncomment this line and the import to bring it back */}
+        {/* <Rsvp /> */}
         <Closing />
       </main>
     </>

@@ -15,14 +15,14 @@ export default function Blessings() {
         <div className="fam-grid">
           <Reveal className="fam-card glass-frost plx" style={{ '--k': -40 }} delay={0}>
             <p className="tag">Groom's Family</p>
-            <p className="who">Mrs. P.N. Siju &amp; Mr. V.R. Shivadas</p>
-            <p className="addr">Vayambukunnel House, Chirakkadavu</p>
+            <p className="who">Mr. Sivadas V.R. &amp; Mrs. Siju P.N.</p>
+            <p className="addr">Vayambukunnel House, Mannarakkayam P.O<br />Ponkunnam, Kottayam</p>
           </Reveal>
           <Reveal as="p" className="fam-amp" delay={150} aria-hidden="true">&amp;</Reveal>
           <Reveal className="fam-card glass-frost plx" style={{ '--k': -70 }} delay={300}>
             <p className="tag">Bride's Family</p>
-            <p className="who">Mrs. S. Lalimol &amp; Mr. C.S. Premkumar</p>
-            <p className="addr">Chundacheril House, Chirakkadavu</p>
+            <p className="who">Mr. Premkumar C.S. &amp; Mrs. Lalimol S.</p>
+            <p className="addr">Choondacheril House, Chirakkadavu East P.O<br />Ponkunnam, Kottayam</p>
           </Reveal>
         </div>
       </div>

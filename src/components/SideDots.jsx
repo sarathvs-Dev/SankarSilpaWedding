@@ -8,7 +8,6 @@ const SCREENS = [
   { id: 'events', label: 'Ceremony' },
   { id: 'gallery', label: 'Gallery' },
   { id: 'blessings', label: 'Blessings' },
-  { id: 'rsvp', label: 'RSVP' },
   { id: 'closing', label: 'Celebrate' },
 ]
 

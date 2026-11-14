@@ -10,7 +10,7 @@ import MusicToggle from './components/MusicToggle.jsx'
 import ShareModal from './components/ShareModal.jsx'
 import Hero from './components/sections/Hero.jsx'
 import Story from './components/sections/Story.jsx'
-import Couple from './components/sections/Couple.jsx'
+// import Couple from './components/sections/Couple.jsx'
 import Events from './components/sections/Events.jsx'
 import Gallery from './components/sections/Gallery.jsx'
 import Blessings from './components/sections/Blessings.jsx'
@@ -56,7 +56,8 @@ export default function App() {
         <main key="home">
           <Hero onOpenShare={() => setShareOpen(true)} />
           <Story />
-          <Couple />
+          {/* Couple hidden for now — uncomment this line and the import (also in Nav.jsx + SideDots.jsx) */}
+          {/* <Couple /> */}
           <Events />
           <Blessings />
           {/* RSVP hidden for now — uncomment this line and the import to bring it back */}

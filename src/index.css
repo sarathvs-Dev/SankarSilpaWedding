@@ -368,6 +368,7 @@ body:not(.locked) .hero-media img { animation: deepZoom 4.2s cubic-bezier(.16, .
 .img-frame img { width: 100%; height: 260px; object-fit: cover; object-position: center 30%; transition: transform 1.2s var(--ease); }
 .tl-media:hover .img-frame img { transform: scale(1.07); }
 .tl-media:hover .img-frame::after { inset: 16px; }
+.story-more { position: relative; z-index: 1; text-align: center; margin-top: clamp(28px, 5vh, 52px); }
 /* node: hairline — diamond — hairline */
 .tl-node { position: relative; display: block; height: 13px; margin-inline: -18px; background: linear-gradient(var(--gold-2), var(--gold-2)) center / 100% 1px no-repeat; }
 .tl-node::after { content: ''; position: absolute; left: 50%; top: 0; width: 13px; height: 13px; margin-left: -6.5px; transform: rotate(45deg); background: var(--silk); border: 1px solid var(--gold); box-shadow: 0 0 0 5px rgba(212, 175, 55, .14), 0 0 16px rgba(212, 175, 55, .5); }

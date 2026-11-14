@@ -5,7 +5,7 @@ import { navigate } from '../hooks/usePage.js'
 const LINKS = [
   { id: 'home', label: 'Home' },
   { id: 'story', label: 'Our Story' },
-  { id: 'couple', label: 'The Couple' },
+  // { id: 'couple', label: 'The Couple' }, // hidden with the Couple section
   { id: 'events', label: 'Events' },
   { id: 'gallery', label: 'Gallery' },
 ]

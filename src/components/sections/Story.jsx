@@ -2,12 +2,14 @@ import Reveal from '../Reveal.jsx'
 import Screen from '../Screen.jsx'
 import Ambient from '../Ambient.jsx'
 import GoldAccents from '../GoldAccents.jsx'
+import { navigate } from '../../hooks/usePage.js'
 import familyImg from '../../assets/family.jpg'
 import ringsImg from '../../assets/ARJ04075_resized.jpg'
 import blessedImg from '../../assets/ARJ02077_resized.jpg'
 
 // Entries reuse the invitation's existing copy.
 // k = parallax factor in px (negative = moves FASTER than the page, i.e. foreground).
+// pos = optional crop focus (CSS object-position) when faces sit off-centre.
 const STEPS = [
   {
     eyebrow: 'The beginning of', title: 'Forever',
@@ -22,7 +24,7 @@ const STEPS = [
   {
     eyebrow: 'Saturday, 12th December 2026', title: 'The day we say yes',
     text: 'The wedding ceremony at 11:50 AM at Chirakkadavu Sree Mahadeva Temple, Ponkunnam.',
-    img: blessedImg, alt: 'Sankar and Silpa', w: 1707, h: 2560, k: -60,
+    img: blessedImg, alt: 'Sankar and Silpa', w: 1707, h: 2560, k: -60, pos: 'center 6%',
   },
 ]
 
@@ -47,7 +49,7 @@ export default function Story() {
             <li className="tl-item" key={s.title}>
               <Reveal className="tl-media plx" style={{ '--k': s.k }} variant="zoom" delay={i * 120}>
                 <div className="img-frame">
-                  <img src={s.img} alt={s.alt} width={s.w} height={s.h} loading="lazy" />
+                  <img src={s.img} alt={s.alt} width={s.w} height={s.h} loading="lazy" style={s.pos && { objectPosition: s.pos }} />
                 </div>
               </Reveal>
               <span className="tl-node" aria-hidden="true" />
@@ -59,6 +61,13 @@ export default function Story() {
             </li>
           ))}
         </ol>
+
+        {/* opens the gallery page (also linked in the nav) */}
+        <Reveal className="story-more" delay={200}>
+          <button type="button" className="btn btn-gold" onClick={() => navigate('gallery')}>
+            View our photos
+          </button>
+        </Reveal>
       </div>
     </Screen>
   )

@@ -4,7 +4,7 @@ import { goTo } from '../hooks/useSectionScroll.js'
 const SCREENS = [
   { id: 'home', label: 'Welcome' },
   { id: 'story', label: 'Our Story' },
-  { id: 'couple', label: 'The Couple' },
+  // { id: 'couple', label: 'The Couple' }, // hidden with the Couple section
   { id: 'events', label: 'Ceremony' },
   { id: 'blessings', label: 'Blessings' },
   { id: 'closing', label: 'Celebrate' },

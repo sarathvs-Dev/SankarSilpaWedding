@@ -14,7 +14,7 @@ import { useEffect } from 'react'
  * .screen-bg, .screen-inner, .screen-fade in index.css).
  * Only screens near the viewport are updated each frame.
  */
-export default function useScreenFX() {
+export default function useScreenFX(page) {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
@@ -53,5 +53,5 @@ export default function useScreenFX() {
       cancelAnimationFrame(raf)
       io.disconnect()
     }
-  }, [])
+  }, [page]) // re-collect screens whenever the page changes
 }

@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Gate from './components/Gate.jsx'
 import SideDots from './components/SideDots.jsx'
 import Spotlight from './components/Spotlight.jsx'
 import useScreenFX from './hooks/useScreenFX.js'
-import useSectionScroll from './hooks/useSectionScroll.js'
+import useSectionScroll, { goTo } from './hooks/useSectionScroll.js'
+import usePage, { initialPage, takePendingSection } from './hooks/usePage.js'
 import Nav from './components/Nav.jsx'
 import MusicToggle from './components/MusicToggle.jsx'
 import ShareModal from './components/ShareModal.jsx'
@@ -16,10 +17,21 @@ import Blessings from './components/sections/Blessings.jsx'
 // import Rsvp from './components/sections/Rsvp.jsx'
 import Closing from './components/sections/Closing.jsx'
 
+// Opening straight onto the gallery link skips the gate.
+if (initialPage === 'gallery') document.body.classList.remove('locked')
+
 export default function App() {
   const [shareOpen, setShareOpen] = useState(false)
-  useScreenFX() // feeds --sp/--ap scroll variables to every <Screen>
+  const page = usePage()
+  useScreenFX(page) // feeds --sp/--ap scroll variables to every <Screen>
   useSectionScroll() // eased screen-by-screen glide (desktop)
+
+  // new page: start at the top, or at the section the nav asked for
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' })
+    const section = takePendingSection()
+    if (section) requestAnimationFrame(() => goTo(section))
+  }, [page])
 
   // Unlock scrolling and tell every <Reveal> it may start animating.
   const handleGateOpen = () => {
@@ -29,24 +41,29 @@ export default function App() {
 
   return (
     <>
-      <Gate onOpen={handleGateOpen} />
-      <Nav />
-      <SideDots />
+      {initialPage === 'home' && <Gate onOpen={handleGateOpen} />}
+      <Nav key={`nav-${page}`} page={page} />
+      {page === 'home' && <SideDots />}
       <Spotlight />
       <MusicToggle />
       <ShareModal isOpen={shareOpen} onClose={() => setShareOpen(false)} />
 
-      <main>
-        <Hero onOpenShare={() => setShareOpen(true)} />
-        <Story />
-        <Couple />
-        <Events />
-        <Gallery />
-        <Blessings />
-        {/* RSVP hidden for now — uncomment this line and the import to bring it back */}
-        {/* <Rsvp /> */}
-        <Closing />
-      </main>
+      {page === 'gallery' ? (
+        <main key="gallery">
+          <Gallery />
+        </main>
+      ) : (
+        <main key="home">
+          <Hero onOpenShare={() => setShareOpen(true)} />
+          <Story />
+          <Couple />
+          <Events />
+          <Blessings />
+          {/* RSVP hidden for now — uncomment this line and the import to bring it back */}
+          {/* <Rsvp /> */}
+          <Closing />
+        </main>
+      )}
     </>
   )
 }

@@ -7,6 +7,8 @@ import { createPortal } from 'react-dom'
  *  - serif caption overlay + counter
  *  - thumbnail slider (auto-centres the active thumb)
  *  - swipe left/right to navigate, swipe down to close; keys: Esc, ← →
+ * Items may carry `full` (high-res, viewer only) and `tiny` (thumb strip)
+ * URLs; otherwise `src` is used everywhere. Neighbours are preloaded.
  */
 export default function Lightbox({ items, index, onClose, onChange }) {
   const open = index !== null
@@ -46,8 +48,19 @@ export default function Lightbox({ items, index, onClose, onChange }) {
     if (s && t) s.scrollTo({ left: t.offsetLeft - s.clientWidth / 2 + t.clientWidth / 2, behavior: 'smooth' })
   }, [index, open])
 
-  if (!open) return null
-  const item = items[index]
+  // warm up the previous/next high-res photos so swiping feels instant
+  useEffect(() => {
+    if (!open || items.length < 2) return
+    ;[1, -1].forEach((d) => {
+      const it = items[(index + d + items.length) % items.length]
+      const img = new Image()
+      img.referrerPolicy = 'no-referrer'
+      img.src = it.full || it.src
+    })
+  }, [open, index, items])
+
+  const item = open ? items[Math.min(index, items.length - 1)] : null
+  if (!item) return null
   const pad = (n) => String(n).padStart(2, '0')
 
   const down = (e) => {
@@ -73,7 +86,7 @@ export default function Lightbox({ items, index, onClose, onChange }) {
 
   return createPortal(
     <div className="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
-      <div key={`bg-${index}`} className="lb-bg" style={{ backgroundImage: `url(${item.src})` }} />
+      <img key={`bg-${index}`} className="lb-bg" src={item.tiny || item.src} alt="" referrerPolicy="no-referrer" />
       <button className="lb-close" onClick={onClose} aria-label="Close">×</button>
 
       <div
@@ -86,26 +99,31 @@ export default function Lightbox({ items, index, onClose, onChange }) {
       >
         <button className="lb-nav prev" aria-label="Previous photo" onClick={() => go(-1)}>‹</button>
         <figure key={index} className={`lb-fig ${dir > 0 ? 'from-right' : 'from-left'}`} style={{ translate: `${dx}px 0` }}>
-          <img src={item.src} alt={item.alt} draggable="false" />
+          <img
+            src={item.full || item.src}
+            alt={item.alt}
+            draggable="false"
+            referrerPolicy="no-referrer"
+          />
         </figure>
         <button className="lb-nav next" aria-label="Next photo" onClick={() => go(1)}>›</button>
       </div>
 
       <div className="lb-caption" key={`cap-${index}`}>
-        <p className="eyebrow">{item.cat}</p>
-        <h3>{item.cap}</h3>
+        {item.cat && <p className="eyebrow">{item.cat}</p>}
+        {item.cap && <h3>{item.cap}</h3>}
         <span className="lb-count">{pad(index + 1)} / {pad(items.length)}</span>
       </div>
 
       <div className="lb-thumbs" ref={strip}>
         {items.map((it, i) => (
           <button
-            key={it.src}
+            key={it.id || it.src}
             className={i === index ? 'active' : ''}
             aria-label={`Go to photo ${i + 1}`}
             onClick={() => { setDir(i > index ? 1 : -1); onChange(i) }}
           >
-            <img src={it.src} alt="" loading="lazy" decoding="async" />
+            <img src={it.tiny || it.src} alt="" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
           </button>
         ))}
       </div>

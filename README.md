@@ -21,6 +21,23 @@ Drop an mp3 at `public/bgm.mp3`. The music-toggle button in the top-right
 corner will play/pause it. If you skip this, the button just does nothing
 when tapped — no error. See `public/ADD_MUSIC_HERE.txt` for details.
 
+### Photo gallery (Google Drive)
+
+The Gallery page (`#/gallery`) loads photos straight from a shared Google
+Drive folder through the Vercel Function `api/gallery.js`. Add or delete
+photos in Drive and the site follows within `GALLERY_CACHE_SECONDS`, no
+redeploy needed. Each direct subfolder becomes a filter tab, and a file's
+Drive *description* becomes its caption.
+
+1. Share the folder as **Anyone with the link — Viewer**.
+2. In Google Cloud Console, enable the **Google Drive API** and create an API
+   key (restrict it to the Drive API).
+3. Set `GOOGLE_DRIVE_API_KEY` and `GOOGLE_DRIVE_FOLDER` (share link or ID) in
+   Vercel → Settings → Environment Variables, and in `.env.local` for
+   `npm run dev`. See `.env.example`.
+
+Until these are set, the gallery shows the bundled photos in `src/assets/`.
+
 ### Personalized guest links
 
 Share links like `yoursite.com/?Name=Sreekutty` — the guest's name will

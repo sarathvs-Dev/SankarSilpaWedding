@@ -438,15 +438,21 @@ body:not(.locked) .hero-media img { animation: deepZoom 4.2s cubic-bezier(.16, .
 .g-tabs button:hover { color: var(--gold); }
 .g-tabs button.active { color: var(--obsidian); }
 
-/* justified rows: every frame = row-height x its own aspect ratio */
-.g-rows { --rh: clamp(130px, 25vh, 250px); display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; animation: fadeIn .5s ease; }
+/* masonry: photos are dealt into the shortest column (see Gallery.jsx) */
+.g-masonry { --gap: clamp(10px, 1.6vw, 18px); display: flex; align-items: flex-start; gap: var(--gap); animation: fadeIn .5s ease; }
+.g-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--gap); }
 .frame {
-  flex: var(--ar) 1 calc(var(--ar) * var(--rh)); max-width: calc(var(--ar) * var(--rh) * 1.45); height: var(--rh); padding: 6px;
-  border: 1px solid rgba(212, 175, 55, .3); border-radius: 3px;
+  aspect-ratio: var(--ar); padding: 5px;
+  border: 1px solid rgba(212, 175, 55, .3); border-radius: 14px;
   background: linear-gradient(145deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .01));
   box-shadow: 0 34px 60px -34px rgba(0, 0, 0, .95);
-  animation: frameFloat 8s ease-in-out var(--fd, 0s) infinite; /* soft floating */
 }
+.frame .m-tilt, .frame .m-img { border-radius: 10px; }
+.g-skel { display: block; aspect-ratio: var(--ar); border-radius: 14px; border: 1px solid rgba(212, 175, 55, .16); background: linear-gradient(100deg, rgba(255, 255, 255, .03) 30%, rgba(232, 211, 138, .12) 50%, rgba(255, 255, 255, .03) 70%) 0 0 / 250% 100%; animation: shimmer 1.8s linear var(--d, 0s) infinite; }
+.g-status { text-align: center; padding: clamp(28px, 6vh, 56px) 16px; font-family: var(--font-serif); font-style: italic; font-size: clamp(1.1rem, 2.4vw, 1.35rem); color: var(--on-dark-soft); }
+.g-status .btn { margin-top: 18px; }
+.g-loading .g-status { padding-top: 22px; }
+.g-more { height: 1px; }
 .m-tilt { display: block; width: 100%; height: 100%; cursor: zoom-in; transition: transform .35s var(--ease), box-shadow .6s; }
 .m-tilt:hover, .m-tilt:focus-visible { box-shadow: 0 0 0 1px rgba(212, 175, 55, .7), 0 24px 80px -12px rgba(212, 175, 55, .38), 0 0 50px -10px rgba(217, 165, 160, .3); }
 .m-img { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; }
@@ -463,7 +469,7 @@ body:not(.locked) .hero-media img { animation: deepZoom 4.2s cubic-bezier(.16, .
 
 /* Viewer */
 .lightbox { position: fixed; inset: 0; z-index: 150; display: flex; flex-direction: column; background: #070707; animation: fadeIn .35s ease; overflow: hidden; }
-.lb-bg { position: absolute; inset: -6%; z-index: 0; background-size: cover; background-position: center; filter: blur(46px) brightness(.38) saturate(1.3); animation: fadeIn .8s ease; }
+.lb-bg { position: absolute; inset: -6%; z-index: 0; width: 112%; height: 112%; object-fit: cover; filter: blur(46px) brightness(.38) saturate(1.3); animation: fadeIn .8s ease; }
 .lb-stage { position: relative; z-index: 1; flex: 1; min-height: 0; display: grid; place-items: center; touch-action: none; cursor: grab; padding: 56px 12px 0; }
 .lb-stage:active { cursor: grabbing; }
 .lb-fig { max-width: 100%; max-height: 100%; display: grid; place-items: center; }

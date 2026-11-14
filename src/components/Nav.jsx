@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { goTo } from '../hooks/useSectionScroll.js'
+import { navigate } from '../hooks/usePage.js'
 
 const LINKS = [
   { id: 'home', label: 'Home' },
@@ -14,10 +15,10 @@ const LINKS = [
  * Gold scroll-progress hairline + full-screen mobile drawer whose links
  * stagger in (see `.drawer button` transition-delay in CSS).
  */
-export default function Nav() {
+export default function Nav({ page = 'home' }) {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
-  const [active, setActive] = useState('home')
+  const [active, setActive] = useState(page === 'gallery' ? 'gallery' : 'home')
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
@@ -33,6 +34,7 @@ export default function Nav() {
   }, [])
 
   useEffect(() => {
+    if (page === 'gallery') return // separate page: keep the Gallery link lit
     const els = LINKS.map((l) => document.getElementById(l.id)).filter(Boolean)
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
@@ -40,7 +42,7 @@ export default function Nav() {
     )
     els.forEach((el) => io.observe(el))
     return () => io.disconnect()
-  }, [])
+  }, [page])
 
   // lock page scroll + Esc to close while the drawer is open
   useEffect(() => {
@@ -53,9 +55,12 @@ export default function Nav() {
     }
   }, [open])
 
+  // Gallery is its own page; every other link is a section of the invitation.
   const go = (id) => {
     setOpen(false)
-    goTo(id)
+    if (id === 'gallery') navigate('gallery')
+    else if (page === 'gallery') navigate('home', id)
+    else goTo(id)
   }
 
   return (

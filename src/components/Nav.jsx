@@ -7,7 +7,7 @@ const LINKS = [
   { id: 'story', label: 'Our Story' },
   // { id: 'couple', label: 'The Couple' }, // hidden with the Couple section
   { id: 'events', label: 'Events' },
-  { id: 'gallery', label: 'Gallery' },
+  // { id: 'gallery', label: 'Gallery' }, // hidden for now
 ]
 
 /**

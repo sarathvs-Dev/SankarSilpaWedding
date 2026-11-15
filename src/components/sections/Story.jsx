@@ -2,8 +2,7 @@ import Reveal from '../Reveal.jsx'
 import Screen from '../Screen.jsx'
 import Ambient from '../Ambient.jsx'
 import GoldAccents from '../GoldAccents.jsx'
-import { navigate } from '../../hooks/usePage.js'
-import familyImg from '../../assets/family.jpg'
+// import { navigate } from '../../hooks/usePage.js'
 import ringsImg from '../../assets/ARJ04075_resized.jpg'
 import blessedImg from '../../assets/ARJ02077_resized.jpg'
 
@@ -11,11 +10,6 @@ import blessedImg from '../../assets/ARJ02077_resized.jpg'
 // k = parallax factor in px (negative = moves FASTER than the page, i.e. foreground).
 // pos = optional crop focus (CSS object-position) when faces sit off-centre.
 const STEPS = [
-  {
-    eyebrow: 'The beginning of', title: 'Forever',
-    text: 'With the love of our families, we begin our journey together.',
-    img: familyImg, alt: 'Engagement ceremony with family', w: 1000, h: 1499, k: -90,
-  },
   {
     eyebrow: 'Two hearts', title: 'One beautiful beginning',
     text: 'With hearts full of gratitude and joy, we invite you to witness the beginning of a story written in two names, blessed by family, and carried forward together from this day on.',
@@ -62,12 +56,12 @@ export default function Story() {
           ))}
         </ol>
 
-        {/* opens the gallery page (also linked in the nav) */}
-        <Reveal className="story-more" delay={200}>
+        {/* Gallery button hidden for now — uncomment to bring it back (also in Nav.jsx) */}
+        {/* <Reveal className="story-more" delay={200}>
           <button type="button" className="btn btn-gold" onClick={() => navigate('gallery')}>
             View our photos
           </button>
-        </Reveal>
+        </Reveal> */}
       </div>
     </Screen>
   )

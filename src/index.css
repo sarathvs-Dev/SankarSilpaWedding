@@ -608,9 +608,8 @@ body:not(.locked) .hero-media img { animation: deepZoom 4.2s cubic-bezier(.16, .
   .hero { padding-bottom: 80px; }
   .hero-names { flex-direction: row; align-items: baseline; gap: .22em; font-size: clamp(3rem, min(9vw, 15vh), 7.5rem); }
 
-  /* horizontal 3-up timeline */
-  .timeline { grid-template-columns: repeat(3, 1fr); gap: 44px; align-items: start; }
-  .tl-item:nth-child(2) { margin-top: 6vh; }
+  /* horizontal 2-up timeline */
+  .timeline { grid-template-columns: repeat(2, 1fr); gap: 56px; align-items: start; max-width: 1000px; margin-inline: auto; }
   .img-frame img { height: min(34vh, 340px); }
 
   .couple-card { padding: 22px 22px 26px; }

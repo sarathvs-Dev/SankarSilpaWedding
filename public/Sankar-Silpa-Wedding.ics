@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sankar-Silpa-Wedding//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:sankar-silpa-wedding-2026@invitation
+DTSTAMP:20260101T000000Z
+DTSTART:20261212T062000Z
+DTEND:20261212T064500Z
+SUMMARY:Sankar & Silpa — Wedding
+LOCATION:Chirakkadavu Sree Mahadeva Temple\, Ponkunnam\, Kottayam
+DESCRIPTION:Wedding ceremony of Sankar & Silpa. Departure time: 10:15 AM.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sankar & Silpa — Wedding tomorrow
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+END:VCALENDAR

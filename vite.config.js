@@ -20,6 +20,21 @@ function devApi() {
   }
 }
 
+/**
+ * Link previews (WhatsApp, Facebook) need an absolute og:image URL, so
+ * %SITE_URL% in index.html becomes the production domain Vercel provides
+ * at build time (localhost in dev).
+ */
+function siteUrl() {
+  return {
+    name: 'site-url',
+    transformIndexHtml(html) {
+      const host = process.env.VERCEL_PROJECT_PRODUCTION_URL
+      return html.replaceAll('%SITE_URL%', host ? `https://${host}` : 'http://localhost:5173')
+    },
+  }
+}
+
 export default defineConfig({
-  plugins: [react(), devApi()],
+  plugins: [react(), devApi(), siteUrl()],
 })
